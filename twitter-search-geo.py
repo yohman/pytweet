@@ -95,13 +95,18 @@ while result_count <  num_results and not not_enough_results_flag:
 	# print(query["search_metadata"])
 
 	for result in query["statuses"]:
-		# if last_id == result["id"]:
-		# 	not_enough_results_flag = True
-		# 	break
+
+
+
 		#-----------------------------------------------------------------------
 		# only process a result if it has a geolocation
 		#-----------------------------------------------------------------------
 		if result["geo"]:
+
+			if last_id == result["id"]:
+				not_enough_results_flag = True
+				break
+
 			created_at = result["created_at"]
 			# Sun May 17 22:23:19 +0000 2015
 			kmldate = datetime.datetime.strptime(created_at, "%a %b %d %H:%M:%S +0000 %Y")
@@ -155,12 +160,17 @@ while result_count <  num_results and not not_enough_results_flag:
 			}
 			kmlfile.write(kmlplacemark.format(**context))
 			result_count += 1
-		last_id = result["id"]
+
+
+			last_id = result["id"]
 
 	#-----------------------------------------------------------------------
 	# let the user know where we're up to
 	#-----------------------------------------------------------------------
 	print "got %d results" % result_count
+
+
+
 
 #-----------------------------------------------------------------------
 # we're all finished, clean up and go home.
